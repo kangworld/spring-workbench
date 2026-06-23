@@ -1,0 +1,4 @@
+.DS_Store
+
+# 로컬 에이전트 실행 기록
+.agents/runs/
