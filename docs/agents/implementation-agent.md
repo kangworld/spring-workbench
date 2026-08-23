@@ -1,16 +1,19 @@
 # implementation-agent
 목표: 적용 가능한 요구사항, 스키마, 프로젝트 규칙과 현재 코드 구조를 기준으로 백엔드 코드를 구현/수정하고, 변경 영향과 후속 작업을 명확히 남깁니다.
 
-변경 이력:
-- 2026-06-19: 삭제된 요구사항/스키마 전용 에이전트를 전제하지 않고 현재 존재하는 입력을 기준으로 작업하도록 표현을 정리했습니다.
-
 범위/출력:
 - 준수 기준:
-  - `docs/standards/basic-development-style.md`
-  - `docs/standards/architecture-guidelines.md`
-  - `docs/standards/entity-modeling.md`
-  - `docs/standards/query-and-db-access.md`
-  - `docs/standards/testing-guidelines.md`
+  - `docs/standards/architecture.md`
+  - `docs/standards/domain-implementation.md`
+  - `docs/standards/coding-conventions.md`
+  - `docs/standards/persistence.md`
+  - `docs/standards/configuration.md`
+  - `docs/standards/client-contracts.md`
+  - `docs/standards/module-integration.md`
+  - `docs/standards/implementation-workflow.md`
+  - `docs/standards/feature-work-document.md`
+  - `docs/standards/testing.md`
+  - `docs/standards/mismatch-prevention-checklist.md`
 
 `notes.md` 작성 규칙:
 - `notes.md` 는 자동 산출물이 아니라, 사용자가 기존 코드 검토, 구현 방향 검토, 리스크 검토를 명시적으로 요청한 경우에만 작성합니다.
@@ -31,7 +34,7 @@
 업데이트 규칙:
 - 변경 전/후 영향 범위(모듈, API, 배치, 데이터 플로우)를 기록합니다.
 - 프로젝트의 기존 아키텍처/코딩 규약을 우선 준수합니다.
-- 코드 스타일/주석 규칙은 `docs/standards/basic-development-style.md`를 기준으로 적용합니다.
+- 아키텍처, 도메인 구현, 코드 스타일, 주석, 모델과 DB 접근 규칙은 해당 책임을 소유한 `docs/standards` 문서를 기준으로 적용합니다.
 - 데이터 구조 변경 시 스키마 문서와 코드 간 정합성을 반드시 맞춥니다.
 - 불확실한 요구사항은 임의 구현하지 않고 `미정/질문`으로 분리합니다.
 - 기능 구현과 무관한 광범위 리팩터링은 분리 커밋 또는 별도 작업으로 관리합니다.
@@ -44,10 +47,9 @@
 - 동일 증상에 대한 수정 시도가 3회 실패하면 더 이상 땜질하지 않고, 구조 리스크 또는 설계 문제로 승격해 `notes.md` 또는 작업 보고에 남깁니다.
 
 구현 체크리스트:
-- 레이어 구성, 도메인 규칙 반영, 검증 순서가 `docs/standards/architecture-guidelines.md`와 일치하는지 확인
-- 예외 처리, 에러 코드, 로그가 `docs/standards/basic-development-style.md` 기준과 운영 요구사항에 맞는지 검토
+- 레이어 구성, 도메인 규칙, 검증 순서, 예외, 에러 코드와 로그가 `architecture.md`, `domain-implementation.md`, `coding-conventions.md`와 일치하는지 확인
 - 트랜잭션 경계와 동시성 이슈(중복 처리, race condition) 검토
-- 외부 의존 호출 정책이 `docs/standards/basic-development-style.md` 기준에 맞는지 검토
+- 외부 의존 호출 정책이 `client-contracts.md`, `configuration.md`, `module-integration.md` 기준에 맞는지 검토
 - 성능 영향 지점(N+1, 풀스캔, 불필요 직렬화) 점검
 - 테스트 코드가 요구사항 문서의 핵심 기능과 실제 변경 동작을 검증하는지 확인
 - 버그 수정 시 재현 절차, 원인 확인 근거, 수정 후 검증 결과가 남는지 확인

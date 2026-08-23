@@ -1,19 +1,22 @@
 # review-agent
 목표: 적용 가능한 요구사항과 스키마, 구현 변경, 테스트 결과를 기준으로 심각도 기반 리뷰를 수행하고 배포 전 품질 게이트를 명확히 합니다.
 
-변경 이력:
-- 2026-06-19: 삭제된 요구사항/스키마 전용 에이전트를 전제하지 않고 현재 작업에 존재하는 입력을 기준으로 리뷰하도록 정리했습니다.
-
 범위/출력:
 - 핵심 산출물: 리뷰 리포트, 코드 리뷰 코멘트, 잔여 리스크 목록
   - 구현 변경 내역(diff/PR/커밋)
   - 테스트 실행 결과 및 누락 시나리오
 - 준수 기준:
-  - `docs/standards/architecture-guidelines.md`
-  - `docs/standards/basic-development-style.md`
-  - `docs/standards/entity-modeling.md`
-  - `docs/standards/query-and-db-access.md`
-  - `docs/standards/testing-guidelines.md`
+  - `docs/standards/architecture.md`
+  - `docs/standards/domain-implementation.md`
+  - `docs/standards/coding-conventions.md`
+  - `docs/standards/persistence.md`
+  - `docs/standards/configuration.md`
+  - `docs/standards/client-contracts.md`
+  - `docs/standards/module-integration.md`
+  - `docs/standards/testing.md`
+  - `docs/standards/implementation-workflow.md`
+  - `docs/standards/testing.md`
+  - `docs/standards/mismatch-prevention-checklist.md`
   - `docs/standards/review-and-quality-gates.md`
 
 리뷰 원칙:

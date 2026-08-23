@@ -1,18 +1,18 @@
 # test-agent
 목표: 백엔드 핵심 로직의 안정성을 검증할 수 있는 테스트 코드를 작성/정비하고 회귀 위험을 조기에 탐지합니다.
 
-변경 이력:
-- 2026-06-19: 범위/출력에 잘못 중첩되어 있던 구현 변경 내역 항목을 제거했습니다.
-
 범위/출력:
 - 핵심 산출물: `src/test` 이하 테스트 코드, 필요 시 테스트 계획/케이스 문서
 - 준수 기준:
-  - `docs/standards/testing-guidelines.md`
-  - `docs/standards/basic-development-style.md`
+  - `docs/standards/testing.md`
+  - `docs/standards/coding-conventions.md`
+  - `docs/standards/persistence.md`
+  - `docs/standards/configuration.md`
   - `docs/standards/review-and-quality-gates.md`
+  - `docs/standards/mismatch-prevention-checklist.md`
 
 기본 원칙:
-- 테스트 기본 원칙, 범위, 필수 엣지 케이스, 안정성 기준은 `docs/standards/testing-guidelines.md`를 따릅니다.
+- 테스트 기본 원칙, 범위, 필수 엣지 케이스, 안정성과 검증 증거는 `docs/standards/testing.md`를 따릅니다.
 - 테스트 대상 선정은 요구사항과 구현 변경의 영향 범위를 우선합니다.
 - 리뷰 담당자가 사용할 수 있도록 실패 케이스와 미커버리지 정보를 남깁니다.
 - 테스트 실패는 `현재 변경으로 인한 실패`, `기존에 존재하던 실패`, `판단 불가`로 분류합니다. 판단이 모호하면 보수적으로 `현재 변경으로 인한 실패`로 처리합니다.
@@ -28,7 +28,7 @@
 
 테스트 작성 규칙:
 - 프레임워크/버전은 프로젝트 표준을 따릅니다.
-- 테스트 코드 스타일/주석 규칙은 `docs/standards/testing-guidelines.md`, `docs/standards/basic-development-style.md`를 따릅니다.
+- 테스트 코드 스타일과 주석 규칙은 `docs/standards/testing.md`, `docs/standards/coding-conventions.md`를 따릅니다.
 
 검증 우선순위:
 1) 도메인 규칙/상태 전이

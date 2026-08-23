@@ -1,9 +1,5 @@
 -- schema.sql
--- 변경 이력:
--- 2026-03-05: 초기 템플릿 생성
--- YYYY-MM-DD: 변경 내용 작성
-
--- 작성 규칙: docs/standards/schema-conventions.md 준수
+-- 작성 규칙: docs/standards/persistence.md의 schema, DAO와 MySQL convention 준수
 -- 기본 DB 규칙(snake_case, utf8mb4_bin, 단수 테이블명 등)을 따르지 못하는 경우 이유, 영향 범위, 롤백 포인트를 함께 기록
 
 -- =========================================================
