@@ -2,6 +2,7 @@
 
 # 로컬 템플릿, 개인 스킬 원본과 작업 자료
 .local/
+_workspace/
 
 # 로컬 에이전트 실행 기록
 .agents/runs/
