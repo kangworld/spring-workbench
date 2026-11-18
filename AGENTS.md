@@ -13,68 +13,35 @@
 - 해결 가능한 범위의 엣지 케이스, 실패 경로, 테스트는 후속 작업으로 미루지 않고 현재 작업에서 닫는 것을 기본으로 합니다. 범위가 과도하게 커지는 경우에만 별도 작업으로 분리하고 이유를 남깁니다.
 - 에이전트는 대안과 권고를 제시할 수 있지만, 사용자 또는 작업 소유자의 방향을 바꾸는 결정은 승인 없이 확정하지 않습니다.
 
-## 2) 전용 에이전트
-아래 문서는 이 저장소의 표준 에이전트 정의이며, 작업 성격에 맞게 선택/조합합니다.
+## 2) 역할과 스킬
 
-1. Implementation Agent
-- 문서: `docs/agents/implementation-agent.md`
-- 역할: 기존 요구사항, 스키마, 프로젝트 규칙과 코드 구조를 바탕으로 외부 프로젝트 레포 코드 구현
-- 참고 기준:
-  - `docs/standards/architecture.md`
-  - `docs/standards/domain-implementation.md`
-  - `docs/standards/coding-conventions.md`
-  - `docs/standards/persistence.md`
-  - `docs/standards/configuration.md`
-  - `docs/standards/client-contracts.md`
-  - `docs/standards/module-integration.md`
-  - `docs/standards/implementation-workflow.md`
-  - `docs/standards/feature-work-document.md`
-  - `docs/standards/testing.md`
-  - `docs/standards/mismatch-prevention-checklist.md`
-
-2. Test Agent
-- 문서: `docs/agents/test-agent.md`
-- 역할: 구현 변경사항에 대한 테스트 작성/보강 및 회귀 위험 점검
-- 참고 기준:
-  - `docs/standards/testing.md`
-  - `docs/standards/coding-conventions.md`
-  - `docs/standards/persistence.md`
-  - `docs/standards/configuration.md`
-  - `docs/standards/mismatch-prevention-checklist.md`
-
-3. Review Agent
-- 문서: `docs/agents/review-agent.md`
-- 역할: 적용 가능한 요구사항·스키마, 구현 변경, 테스트 결과를 기준으로 심각도 기반 리뷰와 품질 게이트를 수행
-- 주요 산출물: `리뷰 리포트`, `코드 리뷰 코멘트`, `잔여 리스크 목록`
+- 역할은 책임과 인계물을 정의합니다. 조사, 구현, 검증, 요청받은 기술 검토에 따라 `docs/roles/`의 해당 역할을 읽습니다.
+- 스킬은 작업의 종류를 보고 역할과 지침을 고릅니다. 배포할 스킬의 원본은 `tools/codex-plugin/skills/`에 둡니다.
+- 기본 개발 작업은 현재 세션에서 관련 역할을 수행합니다. 역할 위임은 사용자 요청 또는 대상 프로젝트에 명시된 실행 범위를 따릅니다.
 
 ## 3) 공통 기준 문서
-- 아키텍처와 패키지 기준: `docs/standards/architecture.md`
-- 도메인 구현과 서비스 책임: `docs/standards/domain-implementation.md`
-- Java 코딩 규칙과 Lombok·주석 기준: `docs/standards/coding-conventions.md`
-- 영속성과 스키마 기준: `docs/standards/persistence.md`
-- 설정과 런타임 구성 기준: `docs/standards/configuration.md`
-- 클라이언트·API 계약 경계: `docs/standards/client-contracts.md`
-- 공통 모듈과 의존성 통합: `docs/standards/module-integration.md`
-- 구현 작업 흐름: `docs/standards/implementation-workflow.md`
-- 피처 작업 문서 규약: `docs/standards/feature-work-document.md`
-- 테스트/검증 기준: `docs/standards/testing.md`
-- 미스매치 방지 체크리스트: `docs/standards/mismatch-prevention-checklist.md`
-- 커밋 메시지와 범위 기준: `docs/standards/commit-conventions.md`
-- 리뷰/품질 게이트 기준: `docs/standards/review-and-quality-gates.md`
-- 스키마 템플릿: `docs/templates/schema-template.sql`
+
+| 작업 | 첫 문서 |
+| --- | --- |
+| 아키텍처, Java, 서비스, 설정, API 계약, 공통 모듈 | [개발 기준 인덱스](docs/guidance/development/README.md) |
+| DB 접근, 쿼리, 스키마 | [영속성 인덱스](docs/guidance/persistence/README.md) |
+| 테스트와 누락 확인 | [검증 인덱스](docs/guidance/verification/README.md) |
+| 장애 또는 버그 조사 | [디버깅](docs/guidance/verification/common/debugging.md) |
+| 구현·피처 문서·Git·리뷰 절차 | [작업 흐름 인덱스](docs/guidance/workflow/README.md) |
+
+스키마 초안에는 [SQL 템플릿](docs/templates/schema-template.sql)을 참고합니다. 외부 프로젝트에서 사용 중인 `docs/agents/`와 `docs/standards/`의 예전 주소는 새 문서로 안내합니다.
 
 ## 4) 권장 실행 순서
 
-1. 작업 대상 식별: 대상 외부 레포 경로, 기능 범위, 적용 지침 확정
-2. 입력 기준 확인: 기존 요구사항, 스키마, 프로젝트 규칙과 현재 코드 구조 확인
-3. Implementation Agent 실행: 외부 레포 코드 변경
-4. Test Agent 실행: 테스트 작성/실행 및 리스크 점검
-5. Review Agent 실행: 보안/품질/성능/테스트 관점 최종 리뷰 및 품질 게이트 상태 판정
+1. 대상 저장소와 기능 범위, 프로젝트의 `AGENTS.md`를 확인합니다.
+2. 요구사항, 스키마와 실제 코드에서 대상 모듈과 적용 기술을 확인합니다.
+3. 작업에 맞는 역할과 지침으로 필요한 구현·조사·검증을 수행합니다.
+4. 요청받은 기술 검토는 해당 역할 정의를 적용합니다.
 
 ### 공통 지침 플러그인 설치·갱신
 
 - 사용자가 “백엔드 공통 지침 설치해줘” 또는 “백엔드 공통 지침 갱신해줘”라고 요청하면 이 저장소에서 `tools/update-codex-plugin.ps1`을 실행하고 설치된 버전을 확인합니다. 사용자는 채팅에서 요청하면 됩니다.
-- `docs/`와 `tools/codex-plugin/SKILL.md`가 배포 파일의 원본입니다. 배포본에 변경이 있으면 스크립트가 `plugins/backend-agent-docs/`를 동기화하고 패치 버전을 올립니다. 패키지만 만들거나 검증할 때는 `-PackageOnly`를 사용합니다.
+- `docs/`와 `tools/codex-plugin/skills/`가 배포 파일의 원본입니다. 배포본에 변경이 있으면 스크립트가 `plugins/backend-agent-docs/`를 동기화하고 패치 버전을 올립니다. 패키지만 만들거나 검증할 때는 `-PackageOnly`를 사용합니다.
 - 스크립트가 별도 권한으로 실행되어야 하면 이 PC에서 사용 중인 Codex 프로필에 설치되도록 실행 환경을 확인합니다.
 
 ## 5) 운영 규칙
@@ -84,9 +51,7 @@
 - 코드, 정책, 스키마 변경이 기존 요구사항/스키마/테스트/메모 문서에 영향을 주면 같은 작업 안에서 가능한 범위까지 함께 갱신합니다.
 - 문서는 보통 이번 작업에서 함께 고칩니다. 다만 아직 방향이 확정되지 않았거나, 실험 중이거나, 문서까지 같이 고치면 이번 작업이 너무 커지는 경우에는 나중에 고칠 수 있습니다. 이때는 왜 지금 안 고치는지와, 나중에 어떤 문서를 고쳐야 하는지 꼭 남깁니다.
 - 대상 외부 프로젝트 레포에서는 AI 작업 문서와 AI 운영 보조 파일을 커밋에 포함하지 않습니다. 예: 대상 저장소의 `commit-reviews/`, `api/`, `development-steps.md`, 기타 에이전트 점검용 메모 / draft 문서. 이런 파일은 사용자가 명시적으로 커밋을 지시하기 전까지 작업트리에만 둡니다.
-- 이 지침을 적용하는 Spring 프로젝트의 기본 데이터 접근 기술은 Spring Data JPA와 Hibernate입니다.
-- 기존 JDBC·MyBatis·R2DBC 구현의 마이그레이션 여부는 호환성, 쿼리 특성, 성능과 운영 위험을 확인해 별도로 결정합니다. 신규 작업에서 JPA 이외의 기술을 선택하면 검증 가능한 이유와 적용 범위를 프로젝트 전용 문서에 남깁니다.
-- JDBC 구현체는 SQL 실행과 row 매핑, 기술 예외의 저장소 계약 변환에 집중합니다. 조회 결과 없음은 `Optional.empty()`처럼 DAO 계약으로 바꿀 수 있지만, update count 0처럼 도메인 상태 판단이 필요한 결과를 DAO 내부에서 도메인 예외나 임의 `IllegalStateException`으로 바꾸지 않습니다. 이 경우 JDBC는 count를 반환하고 서비스가 업무 의미에 맞는 예외를 결정합니다.
+- DB 변경에는 대상 프로젝트의 AGENTS.md에 명시된 모듈별 기술과 [영속성 인덱스](docs/guidance/persistence/README.md)를 적용합니다.
 - 대규모 리팩터링은 기능 변경과 분리해 관리합니다.
 - 운영 영향이 있는 변경은 관련 산출물에 마이그레이션/롤백 전략을 함께 기록합니다.
 - 전역 규약 예외가 필요한 경우 해당 `standards` 문서에 정의된 예외 기록 기준을 따릅니다.

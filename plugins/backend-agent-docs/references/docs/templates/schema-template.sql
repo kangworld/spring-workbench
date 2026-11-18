@@ -1,0 +1,47 @@
+-- schema.sql
+-- 작성 규칙: docs/guidance/persistence/common/persistence.md와 docs/guidance/persistence/databases/mysql.md 준수
+-- 기본 DB 규칙(snake_case, utf8mb4_bin, 단수 테이블명 등)을 따르지 못하는 경우 이유, 영향 범위, 롤백 포인트를 함께 기록
+
+-- =========================================================
+-- 0) 모델 개요
+-- =========================================================
+-- 엔티티 목적:
+-- - 작성 필요
+--
+-- 마이그레이션 / 백필 / 롤백 메모:
+-- - migration:
+-- - backfill:
+-- - rollback:
+--
+-- 접근 패턴:
+-- - 단건 조회:
+-- - 목록 조회:
+-- - 집계/배치:
+--
+-- 허용 상태값 목록(예: OK, BLIND, DEL):
+-- - 작성 필요
+--
+-- 허용 코드값 / enum completeness 점검:
+-- - 신규 값 추가 시 기본 조회 필터, 검증 경로, 배치/집계 영향 확인
+-- - 작성 필요
+--
+-- 로그/이력 분리:
+-- - 작성 필요
+--
+-- 인덱스 근거:
+-- - 작성 필요
+
+-- 예시:
+-- CREATE TABLE example (
+--   example_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+--   name VARCHAR(100) NOT NULL,
+--   status VARCHAR(20) NOT NULL DEFAULT 'OK',
+--   crt_date DATETIME NOT NULL,
+--   upd_date DATETIME NOT NULL,
+--   PRIMARY KEY (example_id)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- =========================================================
+-- 미정/확인 필요
+-- =========================================================
+-- 1. 작성 필요

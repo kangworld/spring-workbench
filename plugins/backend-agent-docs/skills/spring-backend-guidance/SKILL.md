@@ -1,18 +1,17 @@
 ---
 name: spring-backend-guidance
-description: Apply shared Java and Spring coding standards to implementation, troubleshooting, or development tests in projects that opt in through AGENTS.md.
+description: Implement or troubleshoot Java and Spring backend changes using the project's declared technology stack and shared development standards.
 ---
 
-# Spring 백엔드 공통 지침
+# Spring 백엔드 구현
 
-대상 프로젝트의 `AGENTS.md`와 프로젝트 전용 규칙을 먼저 확인한다.
-요구사항, 스키마, 실제 코드와 테스트를 대조한 뒤 변경하는 영역에 해당하는 표준을 읽는다. 아래 경로는 설치된 이 스킬의 `references/`를 기준으로 한다.
+대상 프로젝트의 `AGENTS.md`, 요구사항과 테스트를 확인하고 작업할 모듈과 기술 스택을 파악합니다.
 
-- 패키지, 계층, 의존 방향은 `docs/standards/architecture.md`
-- 서비스 책임, 업무 흐름, 상태 전이와 트랜잭션은 `docs/standards/domain-implementation.md`
-- Java, Lombok, 이름과 주석은 `docs/standards/coding-conventions.md`
-- JPA, JDBC, 쿼리와 스키마는 `docs/standards/persistence.md`. SQL 초안이 필요하면 `docs/templates/schema-template.sql`을 참고한다.
-- 설정, 프로필, Spring 빈과 운영 구성은 `docs/standards/configuration.md`
-- API 요청·응답, 직렬화와 소비자 계약은 `docs/standards/client-contracts.md`
-- 공통 모듈과 의존성 호환성은 `docs/standards/module-integration.md`
-- 개발 테스트와 회귀 검증은 `docs/standards/testing.md`
+테스트·검증만 요청받으면 [검증 역할](../../references/docs/roles/verifier.md), 코드 검토만 요청받으면 [검토 역할](../../references/docs/roles/reviewer.md)을 바로 적용합니다.
+
+1. 계약이나 버그 원인이 불명확하면 [조사 역할](../../references/docs/roles/investigator.md)로 원인과 변경 범위를 좁힙니다.
+2. 코드 수정에는 [구현 역할](../../references/docs/roles/implementer.md)과 [개발 기준 인덱스](../../references/docs/guidance/development/README.md)를 적용합니다.
+3. 저장소·DAO·쿼리·스키마 변경에는 [영속성 인덱스](../../references/docs/guidance/persistence/README.md)에서 공통 기준과 변경 경로에 해당하는 기술 기준을 적용합니다. 스키마 초안이 필요하면 [SQL 템플릿](../../references/docs/templates/schema-template.sql)을 참고합니다.
+4. 구현을 마치면 [검증 역할](../../references/docs/roles/verifier.md)에 따라 변경을 검증합니다.
+
+역할은 작업의 책임입니다. 간단한 작업은 현재 세션에서 수행합니다. 사용자가 위임을 요청했거나 적용되는 프로젝트 지침이 위임을 명시한 경우, 역할 문서와 대상 경로, 계약, 확인한 근거, 기대 산출물을 전달합니다. 호스트가 지원하는 내장 역할 중 조사는 `explorer`, 코드 수정은 `worker`로 맡길 수 있습니다. 같은 파일을 여러 역할에 동시에 수정하도록 배정하지 않습니다.

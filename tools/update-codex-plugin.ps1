@@ -15,18 +15,7 @@ $local = (New-Item -ItemType Directory -Path (Join-Path $repoRoot '.local') -For
 $scratch = Join-Path $local "plugin-update-$([guid]::NewGuid())"
 $candidate = Join-Path $scratch 'package'
 $previous = Join-Path $scratch 'previous'
-$skillPath = 'skills/spring-backend-guidance'
-$references = Join-Path $candidate "$skillPath/references"
-$standards = @(
-    'architecture.md'
-    'client-contracts.md'
-    'coding-conventions.md'
-    'configuration.md'
-    'domain-implementation.md'
-    'module-integration.md'
-    'persistence.md'
-    'testing.md'
-)
+$references = Join-Path $candidate 'references/docs'
 
 function Get-PackageFiles([string] $Root) {
     Get-ChildItem -LiteralPath $Root -Recurse -Force -File | ForEach-Object {
@@ -39,13 +28,14 @@ $lock = [IO.File]::Open((Join-Path $local 'codex-plugin-update.lock'), 'OpenOrCr
 try {
     $manifest = Get-Content -LiteralPath (Join-Path $package $manifestPath) -Raw | ConvertFrom-Json
     New-Item -ItemType Directory -Path (Join-Path $candidate '.codex-plugin'),
-        (Join-Path $references 'docs/standards'), (Join-Path $references 'docs/templates') | Out-Null
+        (Join-Path $references 'guidance'), (Join-Path $references 'templates') | Out-Null
     Copy-Item -LiteralPath (Join-Path $package $manifestPath) -Destination (Join-Path $candidate $manifestPath)
-    Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'codex-plugin/SKILL.md') -Destination (Join-Path $candidate $skillPath)
-    foreach ($standard in $standards) {
-        Copy-Item -LiteralPath (Join-Path $repoRoot "docs/standards/$standard") -Destination (Join-Path $references 'docs/standards')
+    Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'codex-plugin/skills') -Destination $candidate -Recurse
+    Copy-Item -LiteralPath (Join-Path $repoRoot 'docs/roles') -Destination $references -Recurse
+    foreach ($group in 'development', 'persistence', 'verification') {
+        Copy-Item -LiteralPath (Join-Path $repoRoot "docs/guidance/$group") -Destination (Join-Path $references 'guidance') -Recurse
     }
-    Copy-Item -LiteralPath (Join-Path $repoRoot 'docs/templates/schema-template.sql') -Destination (Join-Path $references 'docs/templates')
+    Copy-Item -LiteralPath (Join-Path $repoRoot 'docs/templates/schema-template.sql') -Destination (Join-Path $references 'templates')
 
     if (Compare-Object @(Get-PackageFiles $package) @(Get-PackageFiles $candidate)) {
         $version = [version] $manifest.version

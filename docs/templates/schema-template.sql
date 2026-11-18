@@ -1,5 +1,5 @@
 -- schema.sql
--- 작성 규칙: docs/standards/persistence.md의 schema, DAO와 MySQL convention 준수
+-- 작성 규칙: docs/guidance/persistence/common/persistence.md와 docs/guidance/persistence/databases/mysql.md 준수
 -- 기본 DB 규칙(snake_case, utf8mb4_bin, 단수 테이블명 등)을 따르지 못하는 경우 이유, 영향 범위, 롤백 포인트를 함께 기록
 
 -- =========================================================

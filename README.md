@@ -1,45 +1,61 @@
 # backend-agent-docs
 
-백엔드 개발 에이전트의 지침, 공통 standards, 재사용 템플릿을 관리하는 저장소입니다.
-
-## 구조
+Java·Spring 백엔드에서 재사용하는 개발 지침을 관리하고 Codex 플러그인으로 배포합니다.
 
 ```text
-AGENTS.md
-docs/
-  agents/
-  standards/
-  templates/
+backend-agent-docs/
+|-- AGENTS.md
+|-- docs/
+|   |-- roles/                     조사, 구현, 검증, 기술 검토의 책임과 인계
+|   |-- guidance/
+|   |   |-- development/
+|   |   |   |-- common/             아키텍처, 도메인, API, 설정, 모듈 통합
+|   |   |   `-- implementations/   Java, Lombok, Spring, Jackson
+|   |   |-- persistence/
+|   |   |   |-- common/             저장소·DAO, 트랜잭션과 스키마의 공통 계약
+|   |   |   |-- implementations/   JPA/Hibernate, Spring JDBC, MyBatis, R2DBC
+|   |   |   `-- databases/          MySQL DDL, 인덱스와 방언 규칙
+|   |   |-- verification/
+|   |   |   |-- common/             테스트 범위, 디버깅, 누락 점검
+|   |   |   `-- implementations/   Spring 통합 테스트, JUnit, DB 자원
+|   |   `-- workflow/
+|   |       |-- common/             구현 절차와 피처 문서
+|   |       |-- git/                커밋 규약
+|   |       `-- review/             프로젝트가 사용하는 리뷰 상태 기준
+|   |-- templates/                 SQL 템플릿
+|   |-- agents/                    기존 역할 경로에서 새 문서로 연결
+|   `-- standards/                 기존 개발 지침 경로에서 새 문서로 연결
+|-- tools/
+|   |-- codex-plugin/skills/       구현과 검증 스킬 원본
+|   `-- update-codex-plugin.ps1    배포본 동기화, 버전 갱신과 설치 검증
+|-- plugins/backend-agent-docs/   역할, 스킬, 개발 지침을 담은 설치 패키지
+`-- .agents/plugins/marketplace.json
 ```
 
-- `AGENTS.md`: 저장소 라우팅과 공통 운영 규칙
-- `docs/agents/`: 구현, 테스트, 리뷰 전용 에이전트 정의
-- `docs/standards/architecture.md`: package, 계층, 의존 방향과 구조 기준
-- `docs/standards/domain-implementation.md`: Service 책임, 유스케이스, 상태 전이와 transaction 기준
-- `docs/standards/coding-conventions.md`: Java, Lombok, 모델, 이름, formatting과 주석 기준
-- `docs/standards/persistence.md`: JPA·JDBC, DAO, query, schema와 DB 검증 기준
-- `docs/standards/configuration.md`, `client-contracts.md`, `module-integration.md`: 설정, API 계약과 모듈 연동 기준
-- `docs/standards/implementation-workflow.md`, `feature-work-document.md`: 구현 흐름과 복합 작업의 로컬 계획서 작성 기준
-- `docs/standards/testing.md`, `mismatch-prevention-checklist.md`, `review-and-quality-gates.md`: 테스트, 누락 점검과 리뷰 판정 기준
-- `docs/standards/commit-conventions.md`: 사용자가 commit을 요청했을 때 적용하는 공통 기준
-- `docs/templates/`: 재사용 가능한 산출물 템플릿
+스킬은 요청을 보고 맡을 역할과 읽을 지침을 고릅니다. 역할은 담당 범위와 결과를 문서로 정의합니다. Codex 네이티브 커스텀 역할은 사용자나 프로젝트의 `.codex/agents/` 설정으로 등록하므로, 플러그인에서는 역할 문서를 배포합니다. 일반적인 구현은 현재 세션에서 진행하고, 역할 위임은 사용자 요청이나 대상 프로젝트의 작업 지침을 따릅니다.
 
-프로젝트별 요구사항, 스키마, 메모와 실제 제품 코드는 이 저장소에서 관리하지 않습니다. 작업 시 대상 워크스페이스 또는 외부 프로젝트 저장소에 존재하는 문서를 입력으로 사용합니다.
+## 설치와 갱신
 
-## Codex 플러그인
+이 저장소를 Codex 데스크톱에서 열고 **Plugins → Backend Guidance → Backend Agent Docs → 설치**를 선택합니다. 목록에 새 마켓플레이스가 보이지 않으면 앱을 다시 열어 목록을 새로고침합니다.
 
-플러그인은 Java·Spring 백엔드 구현과 개발 테스트 표준, SQL 템플릿을 `backend-agent-docs:spring-backend-guidance` 스킬의 참조 자료로 묶습니다. 패키지를 만들 때 저장소의 원본 문서를 사용합니다.
+이 저장소의 Codex 채팅에서 **“백엔드 공통 지침 플러그인 설치해줘”**라고 요청해도 됩니다. 공통 지침 원본을 수정한 뒤에는 **“백엔드 공통 지침 갱신해줘”**라고 요청합니다. Codex가 배포본을 동기화하고 내용이 바뀐 경우에만 버전을 올린 뒤, 이 PC의 설치본을 갱신하고 검증합니다. 대상 프로젝트에서는 새 채팅에서 사용합니다.
 
-이 저장소를 Codex 데스크톱에서 열고 **Plugins → Backend Guidance → Backend Agent Docs → 설치**를 선택합니다. 목록에 새 마켓플레이스가 보이지 않으면 앱을 다시 열어 목록을 새로고침합니다. 마켓플레이스는 이 저장소의 플러그인을 설치 화면에 표시하는 목록이며, 설치할 패키지도 저장소에 포함되어 있습니다.
+## 대상 프로젝트 설정
 
-Codex 채팅에서 **“이 PC에 백엔드 공통 지침 플러그인 설치해줘”**라고 요청해도 됩니다.
+프로젝트 루트 `AGENTS.md`에 스킬 이름과 해당 프로젝트의 기술 스택을 적습니다. 여러 기술을 함께 쓰면 모듈 또는 경로까지 기재합니다.
 
-적용할 프로젝트의 루트 `AGENTS.md`에서 공통 지침을 다음과 같이 지정합니다. 프로젝트 전용 지침은 그 파일에서 계속 관리합니다.
+```markdown
+## 기술 스택과 적용 지침
 
-> Spring 백엔드 구현과 개발 테스트에는 `backend-agent-docs:spring-backend-guidance` 스킬을 읽고 변경 영역에 해당하는 공통 개발 표준을 적용한다.
+- 서버는 Java 21과 Spring Boot 3을 사용한다.
+- 주문 모듈 `src/main/java/example/order/`은 Spring Data JPA/Hibernate를 사용한다.
+- 정산 모듈 `src/main/java/example/settlement/`은 Spring JDBC/JdbcTemplate을 사용한다.
+- 관계형 DB는 MySQL이다.
 
-공통 지침을 수정한 뒤에는 이 저장소의 Codex 채팅에서 **“백엔드 공통 지침 갱신해줘”**라고 요청합니다. Codex가 원본과 배포본을 비교하고, 바뀐 경우에만 패키지 버전을 올린 뒤 이 PC의 설치본까지 갱신하고 검증합니다. 적용할 프로젝트에서는 새 채팅을 시작합니다.
+백엔드 구현에는 `backend-agent-docs:spring-backend-guidance`를 적용한다.
+개발 테스트와 코드 검토에는 `backend-agent-docs:spring-backend-verification`을 적용한다.
+DB를 변경할 때는 공통 영속성 기준과 대상 모듈의 기술 기준을 읽는다.
+MySQL DDL·인덱스·전용 SQL을 변경할 때는 MySQL 기준을 추가로 읽는다.
+```
 
-- `.agents/plugins/marketplace.json`은 데스크톱 설치 목록입니다.
-- `plugins/backend-agent-docs/`는 설치 가능한 배포본입니다.
-- 원본은 `docs/`와 `tools/codex-plugin/SKILL.md`에서 수정합니다. 배포본 동기화에는 `tools/update-codex-plugin.ps1`을 사용합니다.
+프로젝트 전용 요구사항, 스키마, 예외와 메모는 대상 프로젝트에서 관리합니다. 배포 파일을 변경하려면 `docs/` 또는 `tools/codex-plugin/skills/`의 원본을 수정합니다.
