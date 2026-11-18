@@ -1,0 +1,10 @@
+{
+  "name": "backend-agent-docs",
+  "version": "0.2.1",
+  "description": "Shared coding and development testing standards for Java and Spring backend projects.",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Backend Agent Docs",
+    "shortDescription": "Common Java and Spring coding and testing standards"
+  }
+}

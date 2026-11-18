@@ -1,4 +1,0 @@
-interface:
-  display_name: "Agent Review Gate"
-  short_description: "저장소별 Codex 커밋 리뷰 게이트를 관리합니다"
-  default_prompt: "Use $manage-agent-review-gate to check or manage the review gate for the repository I specify."
