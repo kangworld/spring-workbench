@@ -6,7 +6,12 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$repoRoot = Split-Path -Parent $PSScriptRoot
+$rootDirectory = Get-Item -LiteralPath (Split-Path -Parent $PSScriptRoot)
+$repoRoot = if ($rootDirectory.LinkType -in 'Junction', 'SymbolicLink') {
+    $rootDirectory.ResolveLinkTarget($true).FullName
+} else {
+    $rootDirectory.FullName
+}
 $marketplaceName = 'backend-guidance'
 $pluginId = "backend-agent-docs@$marketplaceName"
 $package = Join-Path $repoRoot 'plugins/backend-agent-docs'
@@ -69,20 +74,32 @@ try {
 
     Push-Location -LiteralPath $repoRoot
     try {
-        $marketplace = (Invoke-CodexPlugin marketplace list).marketplaces |
-            Where-Object name -eq $marketplaceName
-        if ($marketplace -and $marketplace.root -ne $repoRoot) {
-            $oldRoot = Join-Path $repoRoot '.local/backend-guidance-marketplace'
-            if ($marketplace.root -ne $oldRoot) { throw "Marketplace name is already used at $($marketplace.root)" }
+        # Add can replace a missing local source, while listing that stale source fails.
+        try {
+            Invoke-CodexPlugin marketplace add $repoRoot | Out-Null
+        } catch {
+            $registrationError = $_
+            $marketplace = (Invoke-CodexPlugin marketplace list).marketplaces |
+                Where-Object name -eq $marketplaceName
+            if (-not $marketplace -or $marketplace.root -eq $repoRoot) { throw $registrationError }
+
+            $registeredRoot = $marketplace.root
+            $legacyRoot = Join-Path $repoRoot '.local/backend-guidance-marketplace'
+            $registeredDirectory = Get-Item -LiteralPath $registeredRoot -ErrorAction SilentlyContinue
+            $linkTarget = if ($registeredDirectory.LinkType -in 'Junction', 'SymbolicLink') {
+                $registeredDirectory.ResolveLinkTarget($true).FullName
+            }
+            if ($registeredRoot -ne $legacyRoot -and $linkTarget -ne $repoRoot) {
+                throw $registrationError
+            }
+
             Invoke-CodexPlugin marketplace remove $marketplaceName | Out-Null
             try {
                 Invoke-CodexPlugin marketplace add $repoRoot | Out-Null
             } catch {
-                Invoke-CodexPlugin marketplace add $oldRoot | Out-Null
+                Invoke-CodexPlugin marketplace add $registeredRoot | Out-Null
                 throw
             }
-        } elseif (-not $marketplace) {
-            Invoke-CodexPlugin marketplace add $repoRoot | Out-Null
         }
 
         $installation = Invoke-CodexPlugin add $pluginId
