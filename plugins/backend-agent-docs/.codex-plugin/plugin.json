@@ -4,7 +4,8 @@
   "description": "Shared coding and development testing standards for Java and Spring backend projects.",
   "skills": "./skills/",
   "interface": {
-    "displayName": "Backend Agent Docs",
-    "shortDescription": "Common Java and Spring coding and testing standards"
+    "displayName": "Spring Workbench",
+    "shortDescription": "Common Java and Spring coding and testing standards",
+    "websiteURL": "https://github.com/kangworld/spring-workbench"
   }
 }
