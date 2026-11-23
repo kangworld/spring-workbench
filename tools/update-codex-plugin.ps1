@@ -13,8 +13,8 @@ $repoRoot = if ($rootDirectory.LinkType -in 'Junction', 'SymbolicLink') {
     $rootDirectory.FullName
 }
 $marketplaceName = 'backend-guidance'
-$pluginId = "backend-agent-docs@$marketplaceName"
-$package = Join-Path $repoRoot 'plugins/backend-agent-docs'
+$pluginId = "spring-workbench@$marketplaceName"
+$package = Join-Path $repoRoot 'plugins/spring-workbench'
 $manifestPath = '.codex-plugin/plugin.json'
 $local = (New-Item -ItemType Directory -Path (Join-Path $repoRoot '.local') -Force).FullName
 $scratch = Join-Path $local "plugin-update-$([guid]::NewGuid())"
@@ -39,6 +39,11 @@ try {
     Copy-Item -LiteralPath (Join-Path $repoRoot 'docs/roles') -Destination $references -Recurse
     foreach ($group in 'development', 'persistence', 'verification') {
         Copy-Item -LiteralPath (Join-Path $repoRoot "docs/guidance/$group") -Destination (Join-Path $references 'guidance') -Recurse
+    }
+    $workflow = Join-Path $references 'guidance/workflow'
+    New-Item -ItemType Directory -Path (Join-Path $workflow 'common'), (Join-Path $workflow 'git') | Out-Null
+    foreach ($document in 'common/implementation-workflow.md', 'common/feature-work-document.md', 'git/commit-conventions.md') {
+        Copy-Item -LiteralPath (Join-Path $repoRoot "docs/guidance/workflow/$document") -Destination (Join-Path $workflow $document)
     }
     Copy-Item -LiteralPath (Join-Path $repoRoot 'docs/templates/schema-template.sql') -Destination (Join-Path $references 'templates')
 

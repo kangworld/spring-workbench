@@ -41,7 +41,7 @@
 ### 공통 지침 플러그인 설치·갱신
 
 - 사용자가 “백엔드 공통 지침 설치해줘” 또는 “백엔드 공통 지침 갱신해줘”라고 요청하면 이 저장소에서 `tools/update-codex-plugin.ps1`을 실행하고 설치된 버전을 확인합니다. 사용자는 채팅에서 요청하면 됩니다.
-- `docs/`와 `tools/codex-plugin/skills/`가 배포 파일의 원본입니다. 배포본에 변경이 있으면 스크립트가 `plugins/backend-agent-docs/`를 동기화하고 패치 버전을 올립니다. 패키지만 만들거나 검증할 때는 `-PackageOnly`를 사용합니다.
+- `docs/`와 `tools/codex-plugin/skills/`가 배포 파일의 원본입니다. 배포본에 변경이 있으면 스크립트가 `plugins/spring-workbench/`를 동기화하고 패치 버전을 올립니다. 패키지만 만들거나 검증할 때는 `-PackageOnly`를 사용합니다.
 - 스크립트가 별도 권한으로 실행되어야 하면 이 PC에서 사용 중인 Codex 프로필에 설치되도록 실행 환경을 확인합니다.
 
 ## 5) 운영 규칙

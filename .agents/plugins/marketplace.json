@@ -5,10 +5,10 @@
   },
   "plugins": [
     {
-      "name": "backend-agent-docs",
+      "name": "spring-workbench",
       "source": {
         "source": "local",
-        "path": "./plugins/backend-agent-docs"
+        "path": "./plugins/spring-workbench"
       },
       "policy": {
         "installation": "AVAILABLE",

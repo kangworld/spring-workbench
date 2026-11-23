@@ -1,6 +1,6 @@
 {
-  "name": "backend-agent-docs",
-  "version": "0.2.6",
+  "name": "spring-workbench",
+  "version": "0.2.9",
   "description": "Shared coding and development testing standards for Java and Spring backend projects.",
   "skills": "./skills/",
   "interface": {
